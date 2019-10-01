@@ -51,7 +51,7 @@
         if(appleIDCredential) {
              NSString *identityToken = [[NSString alloc] initWithData:appleIDCredential.identityToken encoding:NSUTF8StringEncoding];
              
-            NSDictionary *userDetails = @{@"token": identityToken, @"userIdentifier": [appleIDCredential user], @"name" : [appleIDCredential fullName], @"email" : [appleIDCredential email ]};
+            NSDictionary *userDetails = @{@"token": identityToken}; //, @"userIdentifier": [appleIDCredential user]
             self.successBlock(userDetails);
         }
     }
