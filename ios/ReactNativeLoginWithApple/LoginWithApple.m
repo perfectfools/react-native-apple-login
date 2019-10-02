@@ -26,7 +26,7 @@
     self.errorBlock = errorHandler;
     ASAuthorizationAppleIDProvider *appleIDProvider = [[ASAuthorizationAppleIDProvider alloc]init];
     ASAuthorizationAppleIDRequest *request = [appleIDProvider createRequest];
-    request.requestedScopes = @[ASAuthorizationScopeFullName, ASAuthorizationScopeEmail];
+    request.requestedScopes = @[ASAuthorizationScopeEmail];//ASAuthorizationScopeFullName, 
     
     ASAuthorizationController *authorizationController = [[ASAuthorizationController alloc]initWithAuthorizationRequests:@[request]];
     
@@ -41,7 +41,9 @@
     NSLog(@"%@",authorization);
     ASAuthorizationAppleIDCredential *appleIDCredential = [authorization credential];
     if(appleIDCredential) {
-        NSDictionary *userDetails = @{@"userIdentifier": [appleIDCredential user], @"name" : [appleIDCredential fullName], @"email" : [appleIDCredential email ]};
+        NSString *identityToken = [[NSString alloc] initWithData:appleIDCredential.identityToken encoding:NSUTF8StringEncoding];
+        NSDictionary *userDetails = @{@"token": identityToken};
+        //NSDictionary *userDetails = @{@"userIdentifier": [appleIDCredential user], @"name" : [appleIDCredential fullName], @"email" : [appleIDCredential email ]};
         self.successBlock(userDetails);
     }
    
