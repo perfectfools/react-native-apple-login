@@ -29,7 +29,7 @@
         if (@available(iOS 13.0, *)) {
             ASAuthorizationAppleIDProvider *appleIDProvider = [[ASAuthorizationAppleIDProvider alloc]init];
             ASAuthorizationAppleIDRequest *request = [appleIDProvider createRequest];
-            request.requestedScopes = @[ASAuthorizationScopeFullName, ASAuthorizationScopeEmail];
+            request.requestedScopes = @[ASAuthorizationScopeEmail]; //ASAuthorizationScopeFullName,
             
         
         ASAuthorizationController *authorizationController = [[ASAuthorizationController alloc]initWithAuthorizationRequests:@[request]];
@@ -49,9 +49,9 @@
         
         ASAuthorizationAppleIDCredential *appleIDCredential = [authorization credential];
         if(appleIDCredential) {
-             NSString *identityToken = [[NSString alloc] initWithData:appleIDCredential.identityToken encoding:NSUTF8StringEncoding];
-             
-            NSDictionary *userDetails = @{@"token": identityToken}; //, @"userIdentifier": [appleIDCredential user]
+            NSString *identityToken = [[NSString alloc] initWithData:appleIDCredential.identityToken encoding:NSUTF8StringEncoding];
+            NSDictionary *userDetails = @{@"token": identityToken};
+            //NSDictionary *userDetails = @{@"userIdentifier": [appleIDCredential user], @"name" : [appleIDCredential fullName], @"email" : [appleIDCredential email ]};
             self.successBlock(userDetails);
         }
     }
